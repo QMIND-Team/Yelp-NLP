@@ -8,7 +8,7 @@ Web scraping Yelp and performing sentiment analysis to comment on the insurabili
 
 * Troy Giorshev
 * Olivia Tom
-* Robert Topham
+* Robert Topham/TopLobster
 * Zion Oginni
 * Rachel Ng
 
