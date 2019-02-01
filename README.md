@@ -12,4 +12,4 @@ Web scraping Yelp and performing sentiment analysis to comment on the insurabili
 * Zion Oginni
 * Rachel Ng
 
-With Sean Kato as PMs
+With Sean Kato as PM
