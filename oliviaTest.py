@@ -21,7 +21,7 @@ def main():
 
     revs = tt.addToRevs(revs, url)
 
-    df = pd.Series(revs)
+    df = pd.DataFrame(revs)
     print(df)
     #tt.printReviews(revs)
   
