@@ -25,6 +25,8 @@ def printReviews(reviews):
 def addToRevs(revs, baseurl):
     '''Docstring
     Blah blah do stuff
+    extends list then converts to pd
+    returns pandas dataframe
     '''
     stop = False
     index = 0
@@ -69,8 +71,7 @@ def main():
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
     revs = []
 
-    revs = addToRevs(revs, url)
-
+    revs = addToRevs(revs, url) #assigns dataframe
     print(revs)
 
 if __name__ == "__main__":
