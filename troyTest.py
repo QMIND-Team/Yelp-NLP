@@ -53,8 +53,8 @@ def addToRevs(revs, baseurl):
             for p in plist:
                 pars.append(p)
 
-        revs.extend([p.get_text() for p in pars]) # Extend, not append here
-        df = pd.DataFrame(revs) #Converts list to pd DataFrame
+        df = pd.DataFrame([p.get_text() for p in pars], columns = ["Reviews"]) #saves 20 reviews as dataframe
+        revs = pd.concat([df,revs], ignore_index= True) #adds to our main dataframe, avoids index from repeatedly going 0-19
 
         index += 20
 
@@ -62,14 +62,14 @@ def addToRevs(revs, baseurl):
             # Not sure if the best way is to do this, or to make this a break and have the while loop be an infinite loop.
             stop = True
     
-    return df
+    return revs
 
 
 def main():
     print("Let's go! \n") #Sanity check that things are starting
     #url = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
-    revs = []
+    revs = pd.DataFrame(columns=["Reviews"])
 
     revs = addToRevs(revs, url) #assigns dataframe
     print(revs)
