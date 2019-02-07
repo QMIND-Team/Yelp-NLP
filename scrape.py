@@ -25,10 +25,9 @@ def openSoup(page):
     return soup
 
 def addToRevsList(revs, baseurl):
-    '''Docstring
-    Blah blah do stuff
-    extends list then converts to pd
-    returns pandas dataframe
+    ''' Add to the reviews, list version
+    Take in the reviews list and the base url to scrape
+    returns an extended reviews list, with the new reviews added
     '''
     stop = False
     index = 0
@@ -65,4 +64,3 @@ def addToRevsList(revs, baseurl):
             stop = True
     
     return revs
-
