@@ -98,7 +98,7 @@ def addToRevs(revs, baseurl):
                 pars.append(p)
 
         df = pd.DataFrame([p.get_text() for p in pars], columns = ["Reviews"]) #saves 20 reviews as dataframe
-        revs = pd.concat([df,revs], ignore_index= True) #adds to our main dataframe, avoids index from repeatedly going 0-19
+        revs = pd.concat([df,revs], ignore_index= True, sort = True) #adds to our main dataframe, avoids index from repeatedly going 0-19
 
         index += 20
 
