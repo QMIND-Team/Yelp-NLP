@@ -2,7 +2,7 @@
 Olivia's test to convert reviews to pandas
 '''
 
-import troyTest as tt
+import scrapy as sc
 import numpy as np
 import pandas as pd 
 
@@ -19,7 +19,7 @@ def main():
     
     revs = []
 
-    revs = tt.addToRevs(revs, url)
+    revs = sc.addToRevs(revs, url)
 
     df = pd.DataFrame(revs)
     print(df)
