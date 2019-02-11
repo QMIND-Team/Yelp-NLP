@@ -16,6 +16,6 @@ col = ["Reviews","Sentiment" , "Url"]
 df = pd.concat([revs1, revs2], keys=['Harpers', 'Credit Union'], names=['Company', 'Index'])
 print(df)
 '''
-#Companies and sections on top, simple index on side
+#Companies and sections on top
 df = pd.concat([revs1, revs2], axis = 1, keys=['Harpers', 'Credit Union'], names=['Company', 'Index'])
 print(df)
