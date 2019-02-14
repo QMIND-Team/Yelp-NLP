@@ -9,7 +9,7 @@ def main():
     print("Let's go! \n") #Sanity check that things are starting
     #url = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
-    revs = pd.DataFrame(columns=["Reviews"])
+    revs = pd.DataFrame(columns=["Reviews", "Dates"])
 
     '''
     # Old way

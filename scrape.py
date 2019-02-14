@@ -125,8 +125,10 @@ def addToRevs(revs, baseurl):
         pars = extractRevs(soup)
         dates = extractDates(soup)
 
-        df = pd.DataFrame(pars, columns = ["Reviews"]) #saves 20 reviews as dataframe
-        revs = pd.concat([df,revs], ignore_index= True, sort = True) #adds to our main dataframe, avoids index from repeatedly going 0-19
+        dfrevs = pd.DataFrame(data = pars, columns = ['Reviews']) #saves 20 reviews as dataframe
+        dfdates = pd.DataFrame(data = dates, columns = ['Dates']) #saves 20 dates as dataframe
+        df = dfrevs.join(dfdates) #merges revs and dates
+        revs = pd.concat([df,revs], ignore_index= True, sort = True)  #adds to our main dataframe, avoids index from repeatedly going 0-19
 
         index += 20
 
