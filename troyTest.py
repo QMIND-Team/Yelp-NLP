@@ -11,13 +11,9 @@ def main():
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
     revs = pd.DataFrame(columns=["Reviews"])
 
-    '''
-    # Old way
-    revs = sc.addToRevsList(revs, url)
-    pp.pprint(revs)
-    '''
     revs = sc.addToRevs(revs, url)
-    pp.pprint(revs)
+    print(revs)
+    #pp.pprint(revs)
 
 if __name__ == "__main__":
     main()
