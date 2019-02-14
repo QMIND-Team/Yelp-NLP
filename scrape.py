@@ -125,6 +125,7 @@ def addToRevs(revs, baseurl):
         pars = extractRevs(soup)
         dates = extractDates(soup)
 
+        #Possibilty that these aren't lined up properly. There are 2 more dates than revs for some reason??
         dfrevs = pd.DataFrame(data = pars, columns = ['Reviews']) #saves 20 reviews as dataframe
         dfdates = pd.DataFrame(data = dates, columns = ['Dates']) #saves 20 dates as dataframe
         df = dfrevs.join(dfdates) #merges revs and dates
