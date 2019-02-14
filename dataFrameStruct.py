@@ -24,7 +24,7 @@ print(df)
 dfRaw = pd.concat([revs1, revs2], axis = 1, keys=['Harpers', 'Credit Union'], names=['Company','Type'])
 print(dfRaw)
 '''
-category = ["Average Star", "Average Rating", "Annual Growth"]
+category = ["Average Star", "Average Rating", "Anwnual Growth"]
 data = [[1,2], [3,4],[5,6]]
 dfSummary = pd.DataFrame(data = data, index = category, columns = ['Harpers', 'Credit Union'])
 print(dfSummary)

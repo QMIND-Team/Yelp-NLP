@@ -2,7 +2,7 @@
 Olivia's test to convert reviews to pandas
 '''
 
-import scrapy as sc
+import scrape as sc
 import numpy as np
 import pandas as pd 
 
