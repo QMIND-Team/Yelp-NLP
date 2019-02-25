@@ -4,6 +4,7 @@ Troy's testing module for the webscraper
 import scrape as sc
 import pprint as pp
 import pandas as pd
+import wordCloud as wc 
 
 def main():
     print("Let's go! \n") #Sanity check that things are starting
@@ -14,6 +15,10 @@ def main():
     revs = sc.addToRevs(revs, url)
     print(revs)
     #pp.pprint(revs)
+
+    #Testing wordCloud
+    text = revs.Reviews[0]
+    wc.createWordCloud(text)
 
 if __name__ == "__main__":
     main()

@@ -1,3 +1,11 @@
+'''
+Word cloud module.  Takes in a string and outputs a word cloud.
+Looking to setup to take in a dataframe and cacatonate all the reviews for one large cloud.
+
+Following for now:
+https://www.datacamp.com/community/tutorials/wordcloud-python
+'''
+#probably don't need all of these...
 import numpy as np
 import pandas as pd
 from os import path
@@ -8,18 +16,11 @@ import scrape as sc
 
 import matplotlib.pyplot as plt
 
-#bring in a review set
-url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
-revs = pd.DataFrame(columns=["Reviews", "Dates"]) 
-revs = sc.addToRevs(revs, url)
+def createWordCloud(text):
+    # Create and generate a word cloud image:
+    wordcloud = WordCloud().generate(text)
 
-# Start with one review:
-text = revs.Reviews[0]
-
-# Create and generate a word cloud image:
-wordcloud = WordCloud().generate(text)
-
-# Display the generated image:
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.show()
+    # Display the generated image:
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
