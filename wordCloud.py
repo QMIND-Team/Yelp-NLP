@@ -16,7 +16,11 @@ import scrape as sc
 
 import matplotlib.pyplot as plt
 
-def createWordCloud(text):
+def createWordCloud(revs):
+    #extract reviews and cacatonate
+    allRevs = revs.loc[:, "Reviews"]
+    text = " ".join(allRevs)
+
     # Create and generate a word cloud image:
     wordcloud = WordCloud().generate(text)
 

@@ -17,8 +17,7 @@ def main():
     #pp.pprint(revs)
 
     #Testing wordCloud
-    text = revs.Reviews[0]
-    wc.createWordCloud(text)
+    wc.createWordCloud(revs)
 
 if __name__ == "__main__":
     main()
