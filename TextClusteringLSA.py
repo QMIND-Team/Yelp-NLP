@@ -1,3 +1,9 @@
+'''
+Finds common theme topics for a set of reviews. Should be better once we aren't comparing burgers to banks
+
+Using
+http://brandonrose.org/clustering
+'''
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,10 +13,27 @@ import mpld3
 
 import scrape as sc 
 
-url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
-revs = pd.DataFrame(columns=["Reviews", "Dates"])
-revs = sc.addToRevs(revs, url)
+url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+url1 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
 
+revs1 = sc.createRevs(url1)
+revs2 = sc.createRevs(url2)
+
+df = sc.mergeRevs([revs1,revs2], ['Harpers', 'CU'])
+
+#Selecting 
+revsDfhar = df[('Harpers', 'Reviews')]
+revsDfcu = df[('Credit Union', 'Reviews')]
+print(revsDfhar)
+
+'''
+#This works but only for a single company set of reviews
+col = ["Reviews","Sentiment", "Url"]
+revs = pd.DataFrame(columns = col)
+revs = sc.addToRevs(revs, url1)
+'''
+
+'''
 # removing everything except alphabets`
 revs['clean_revs'] = revs['Reviews'].str.replace("[^a-zA-Z#]", " ")
 
@@ -67,5 +90,4 @@ for i, comp in enumerate(svd_model.components_):
     for t in sorted_terms:
         print(t[0])
     print(" ")
-
-#Visualize data
+'''
