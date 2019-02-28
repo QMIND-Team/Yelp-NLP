@@ -12,8 +12,10 @@ def main():
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
     revs = pd.DataFrame(columns=["Reviews", "Dates"])
 
-    revs = sc.addToRevs(revs, 'harpers', url)
-    revs = sc.addToRevs(revs, 'credit union', url2)
+    revs1 = sc.createRevs(url)
+    revs2 = sc.createRevs(url2)
+
+    revs = sc.mergeRevs([revs1,revs2,revs1], ['Harpers', 'CU', 'Hapers'])
 
     print(revs)
     pp.pprint(revs)

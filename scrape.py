@@ -184,6 +184,5 @@ def mergeRevs(revsList, companyList):
     Merges all reviews into one dataframe with multiindexing
     '''
     dfMerged = pd.concat(revsList, axis = 1, keys=companyList, names=['Company','Type'])
-
     return dfMerged
 
