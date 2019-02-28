@@ -8,16 +8,18 @@ import wordCloud as wc
 
 def main():
     print("Let's go! \n") #Sanity check that things are starting
-    #url = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+    url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
     revs = pd.DataFrame(columns=["Reviews", "Dates"])
 
     revs = sc.addToRevs(revs, url)
+    revs = sc.addToRevs(revs, url2)
+
     print(revs)
-    #pp.pprint(revs)
+    pp.pprint(revs)
 
     #Testing wordCloud
-    wc.createWordCloud(revs)
+    #wc.createWordCloud(revs)
 
 if __name__ == "__main__":
     main()

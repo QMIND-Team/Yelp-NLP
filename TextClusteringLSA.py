@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 pd.set_option("display.max_colwidth", 200)
+import mpld3
 
 import scrape as sc 
 
@@ -66,3 +67,5 @@ for i, comp in enumerate(svd_model.components_):
     for t in sorted_terms:
         print(t[0])
     print(" ")
+
+#Visualize data
