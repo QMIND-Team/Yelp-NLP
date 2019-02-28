@@ -4,45 +4,38 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 pd.set_option("display.max_colwidth", 200)
 
-import scrape.py as sc 
+import scrape as sc 
 
 url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
 revs = pd.DataFrame(columns=["Reviews", "Dates"])
 revs = sc.addToRevs(revs, url)
 
-dataset = fetch_20newsgroups(shuffle=True, random_state=1, remove=('headers', 'footers', 'quotes'))
-documents = dataset.data
-print(documents)
-len(documents)
-'''
-news_df = pd.DataFrame({'document':documents})
-
 # removing everything except alphabets`
-news_df['clean_doc'] = news_df['document'].str.replace("[^a-zA-Z#]", " ")
+revs['clean_revs'] = revs['Reviews'].str.replace("[^a-zA-Z#]", " ")
 
 # removing short words
-news_df['clean_doc'] = news_df['clean_doc'].apply(lambda x: ' '.join([w for w in x.split() if len(w)>3]))
+revs['clean_revs'] = revs['clean_revs'].apply(lambda x: ' '.join([w for w in x.split() if len(w)>3]))
 
 # make all text lowercase
-news_df['clean_doc'] = news_df['clean_doc'].apply(lambda x: x.lower())
+revs['clean_revs'] = revs['clean_revs'].apply(lambda x: x.lower())
 
 
 from nltk.corpus import stopwords
 stop_words = stopwords.words('english')
 
 # tokenization
-tokenized_doc = news_df['clean_doc'].apply(lambda x: x.split()) 
+tokenized_doc = revs['clean_revs'].apply(lambda x: x.split()) 
 
 # remove stop-words
 tokenized_doc = tokenized_doc.apply(lambda x: [item for item in x if item not in stop_words])
 
 # de-tokenization
 detokenized_doc = []
-for i in range(len(news_df)):
+for i in range(len(revs)):
     t = ' '.join(tokenized_doc[i])
     detokenized_doc.append(t)
     
-news_df['clean_doc'] = detokenized_doc
+revs['clean_revs'] = detokenized_doc
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -51,7 +44,7 @@ vectorizer = TfidfVectorizer(stop_words='english',
                              max_df = 0.5, 
                              smooth_idf=True)
 
-X = vectorizer.fit_transform(news_df['clean_doc'])
+X = vectorizer.fit_transform(revs['clean_revs'])
 
 X.shape # check shape of the document-term matrix
 
@@ -73,4 +66,3 @@ for i, comp in enumerate(svd_model.components_):
     for t in sorted_terms:
         print(t[0])
     print(" ")
-    '''
