@@ -12,11 +12,12 @@ def main():
     url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
     revs = pd.DataFrame(columns=["Reviews", "Dates"])
 
-    revs = sc.addToRevs(revs, url)
-    revs = sc.addToRevs(revs, url2)
+    revs = sc.addToRevs(revs, 'harpers', url)
+    revs = sc.addToRevs(revs, 'credit union', url2)
 
     print(revs)
     pp.pprint(revs)
+
 
     #Testing wordCloud
     #wc.createWordCloud(revs)

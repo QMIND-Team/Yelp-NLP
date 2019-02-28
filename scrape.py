@@ -138,3 +138,52 @@ def addToRevs(revs, baseurl):
             stop = True
     
     return revs
+
+def createRevs(baseurl):
+    '''Creates a review dataframe with review, sentiment and url column.
+    '''
+    stop = False
+    index = 0
+    numrevs = -1
+
+    col = ["Reviews","Sentiment", "Url"]
+    revs = pd.DataFrame(columns = col)
+
+    while not stop:
+        url = baseurl + "?start=" + str(index)
+        page = getPage(url)
+        soup = openSoup(page)
+
+        # If we havent figured out yet, get the max number of reviews from the top of the page
+        # Note: This lies!
+        if numrevs == -1:
+            maxes = soup.find_all('span', class_="review-count rating-qualifier")
+            tmpstring = maxes[0].get_text()
+            # This next line turns the string "64 reviews" into the int "64"
+            numrevs = int(re.findall(r'\d+', tmpstring)[0]) #Yeah that could be broken to a few lines for readability
+
+        pars = extractRevs(soup)
+        dates = extractDates(soup)
+
+        #Possibilty that these aren't lined up properly. There are 2 more dates than revs for some reason??
+        dfrevs = pd.DataFrame(data = pars, columns = ['Reviews']) #saves 20 reviews as dataframe
+        dfdates = pd.DataFrame(data = dates, columns = ['Dates']) #saves 20 dates as dataframe
+        df = dfrevs.join(dfdates) #merges revs and dates
+        revs = pd.concat([df,revs], ignore_index= True, sort = True)  #adds to our main dataframe, avoids index from repeatedly going 0-19
+
+        index += 20
+
+        if index >= numrevs:
+            # Not sure if the best way is to do this, or to make this a break and have the while loop be an infinite loop.
+            stop = True
+    
+    return revs
+
+def mergeRevs(revsList, companyList):
+    '''
+    Merges all reviews into one dataframe with multiindexing
+    '''
+    dfMerged = pd.concat(revsList, axis = 1, keys=companyList, names=['Company','Type'])
+
+    return dfMerged
+
