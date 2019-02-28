@@ -1,24 +1,21 @@
-'''
-Text clustering module.  Takes in a string and outputs a word cloud.
-Following tutorial for now then altering for our data set
-
-Following for now:
-https://www.analyticsvidhya.com/blog/2018/10/stepwise-guide-topic-modeling-latent-semantic-analysis/
-'''
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 pd.set_option("display.max_colwidth", 200)
 
-from sklearn.datasets import fetch_20newsgroups
+import scrape.py as sc 
+
+url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+revs = pd.DataFrame(columns=["Reviews", "Dates"])
+revs = sc.addToRevs(revs, url)
 
 dataset = fetch_20newsgroups(shuffle=True, random_state=1, remove=('headers', 'footers', 'quotes'))
 documents = dataset.data
-
+print(documents)
+len(documents)
+'''
 news_df = pd.DataFrame({'document':documents})
-
-#Preprocessing
 
 # removing everything except alphabets`
 news_df['clean_doc'] = news_df['document'].str.replace("[^a-zA-Z#]", " ")
@@ -29,11 +26,12 @@ news_df['clean_doc'] = news_df['clean_doc'].apply(lambda x: ' '.join([w for w in
 # make all text lowercase
 news_df['clean_doc'] = news_df['clean_doc'].apply(lambda x: x.lower())
 
+
 from nltk.corpus import stopwords
 stop_words = stopwords.words('english')
 
 # tokenization
-tokenized_doc = news_df['clean_doc'].apply(lambda x: x.split())
+tokenized_doc = news_df['clean_doc'].apply(lambda x: x.split()) 
 
 # remove stop-words
 tokenized_doc = tokenized_doc.apply(lambda x: [item for item in x if item not in stop_words])
@@ -43,15 +41,15 @@ detokenized_doc = []
 for i in range(len(news_df)):
     t = ' '.join(tokenized_doc[i])
     detokenized_doc.append(t)
-
+    
 news_df['clean_doc'] = detokenized_doc
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 vectorizer = TfidfVectorizer(stop_words='english', 
-max_features= 1000, # keep top 1000 terms 
-max_df = 0.5, 
-smooth_idf=True)
+                             max_features= 1000, # keep top 1000 terms 
+                             max_df = 0.5, 
+                             smooth_idf=True)
 
 X = vectorizer.fit_transform(news_df['clean_doc'])
 
@@ -74,18 +72,5 @@ for i, comp in enumerate(svd_model.components_):
     print("Topic "+str(i)+": ")
     for t in sorted_terms:
         print(t[0])
-        print(" ")
-
-#Visuals
-import umap
-
-X_topics = svd_model.fit_transform(X)
-embedding = umap.UMAP(n_neighbors=150, min_dist=0.5, random_state=12).fit_transform(X_topics)
-
-plt.figure(figsize=(7,5))
-plt.scatter(embedding[:, 0], embedding[:, 1], 
-c = dataset.target,
-s = 10, # size
-edgecolor='none'
-)
-plt.show()
+    print(" ")
+    '''
