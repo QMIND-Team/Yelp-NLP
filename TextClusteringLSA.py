@@ -25,8 +25,7 @@ df = sc.mergeRevs([revs1,revs2], ['Harpers', 'CU'])
 justRevs = (df.iloc[:, df.columns.get_level_values(1)=='Reviews'])
 revs = justRevs['Harpers'].append(justRevs['CU']).reset_index(drop=True)
 revs = revs.dropna()
-print(revs)
-#print(revsDfhar)
+
 
 '''
 #This works but only for a single company set of reviews
