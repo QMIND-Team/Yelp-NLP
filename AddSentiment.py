@@ -1,5 +1,6 @@
 import scrape as sc
 import numpy as np
+import pandas as pd
 import keras
 from keras.models import load_model
 import pickle
@@ -26,6 +27,7 @@ model = load_model("sentiment_predictor.h5")
 
 # Will now import the model we developed during our warm-up project for the purposes of predicting the sentiment of credit union reviews. This can be done now that we have cleaned and vectorized our data. Since keras is wonderful and has a built-in model prediction feature, won't unnecessarily complicate the prediction process by re-inventing the wheel. But rather, will simply pass in our new data into the built in prediction feature in keras.
 
+pd.options.display.max_columns = 50
 
 def get_sentiment(review):
     singletonlist = [review]
@@ -43,11 +45,15 @@ def addSentiments(revs):
     companies = list(revs.columns.levels[0])
     for company in companies:
         #iterate through each review
-        for index, rev in revs[company, 'Reviews'].iterrows():
+        for index, rev in revs[company, 'Reviews'].iteritems():
             #do sentiment analysis with rev
-            sentiment = get_sentiment(rev)
-            #place sentiment val in dataframe
-            revs.loc[index, (company, 'Sentiment')] = sentiment
+            if type(rev) == type("T"):
+                sentiment = get_sentiment(rev)
+                revs.loc[index, (company, 'Sentiment')] = sentiment
 
     return revs
 
+addSentiments(data)
+
+
+pickle.dump(data, open("dfFinal.p","wb"))
