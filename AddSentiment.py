@@ -47,7 +47,7 @@ def addSentiments(revs):
             #do sentiment analysis with rev
             sentiment = get_sentiment(rev)
             #place sentiment val in dataframe
-            revs.loc[index, [(company, 'Sentiment')] = sentiment
+            revs.loc[index, (company, 'Sentiment')] = sentiment
 
     return revs
 
