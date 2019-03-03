@@ -153,6 +153,8 @@ def removePunct(text):
 def cleanRevs(revs):
     companies = list(revs.columns.levels[0])
     for company in companies:
+        #replace NaN cells with ""
+        revs[company, 'Reviews'] =  revs[company, 'Reviews'].replace(np.nan, '', regex=True)
         # remove punctuation and uppercase
         revs[company, 'Reviews']  = revs[company, 'Reviews'].astype('str').apply(lambda x: removePunct(x.lower()))
         
