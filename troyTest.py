@@ -100,7 +100,7 @@ def main():
     revs = sc.mergeRevs(revslist, names)
 
     print(revs)
-    pp.pprint(revs)
+    pp.print(revs)
     pickle.dump(revs, open("df.p","wb"))
 
     #Testing wordCloud
