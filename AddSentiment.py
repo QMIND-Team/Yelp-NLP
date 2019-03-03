@@ -14,7 +14,6 @@ vocab = pickle.load(open("vocab.p","rb"))
 
 # Here we are importing a useful function that converts our data set of sentences into a large matrix of 0's and 1's.
 
-
 # Set up the vectorizer and model that we've previously trained to get sentiment
 
 vectorizer = CountVectorizer(binary=True, lowercase=False, vocabulary = vocab)
@@ -38,3 +37,4 @@ def get_sentiment(review):
     sentiment = model.predict(vector[0:1])[0][0]
     
     return sentiment
+
