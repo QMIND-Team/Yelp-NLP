@@ -160,6 +160,7 @@ def cleanRevs(revs):
         
     return revs
 
+
 def main():
    # pd.options.display.max_columns = 50
     url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
