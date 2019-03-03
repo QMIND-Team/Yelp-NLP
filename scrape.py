@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import re
 import numpy as np 
 import pandas as pd
+import string
 
 def getPage(url):
     ''' Get the page object
@@ -145,3 +146,30 @@ def mergeRevs(revsList, companyList):
     dfMerged = pd.concat(revsList, axis = 1, keys=companyList, names=['Company','Type'])
     return dfMerged
 
+def removePunct(text):
+    noPunct = ''.join([char for char in text if char not in string.punctuation])
+    return noPunct
+
+def cleanRevs(revs):
+    companies = list(revs.columns.levels[0])
+    for company in companies:
+        #replace NaN cells with ""
+        revs[company, 'Reviews'] =  revs[company, 'Reviews'].replace(np.nan, '', regex=True)
+        # remove punctuation and uppercase
+        revs[company, 'Reviews']  = revs[company, 'Reviews'].astype('str').apply(lambda x: removePunct(x.lower()))
+        
+    return revs
+
+def main():
+   # pd.options.display.max_columns = 50
+    url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+    url1 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+
+    rev1 = createRevs(url1)
+    rev2 = createRevs(url2)
+    revs = mergeRevs([rev1, rev2], ['Harpers', 'CU'])
+    
+    print(cleanRevs(revs))
+    
+if __name__== "__main__":
+    main()
