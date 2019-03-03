@@ -52,7 +52,6 @@ def extractDates(soup):
             datelistraw.remove(date)
 
     datelist = []
-    print(datelistraw)
 
     for date in datelistraw:
         match = re.search(r'\d{1,2}/\d{1,2}/\d{4}', date).group(0)
