@@ -2,9 +2,13 @@
 Olivia's test to convert reviews to pandas
 '''
 
-import scrape as sc
 import numpy as np
 import pandas as pd 
+
+import sys
+sys.path.append("..")
+import scrape as sc
+import TextClusteringLSA as tc
 
 def listToPd (list):
   
@@ -14,16 +18,15 @@ def listToPd (list):
 
 
 def main():
-    #url = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
-    url = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+  url1 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+  url2 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+
+  rev1 = sc.createRevs(url2)
+  rev2 = sc.createRevs(url2)
+  revs = sc.mergeRevs([rev1, rev2], ['Harpers', 'CU'])
     
-    revs = []
+  tc.generateTopics(revs, 'Harpers', 3)
 
-    revs = sc.addToRevs(revs, url)
-
-    df = pd.DataFrame(revs)
-    print(df)
-    #tt.printReviews(revs)
   
 if __name__== "__main__":
   main()

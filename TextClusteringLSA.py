@@ -1,5 +1,5 @@
 '''
-Finds common theme topics for a set of reviews. Should be better once we aren't comparing burgers to banks
+Finds common theme topics for a set of reviews for a single company
 
 Using
 http://brandonrose.org/clustering
@@ -13,33 +13,32 @@ pd.set_option("display.max_colwidth", 200)
 import mpld3
 
 import scrape as sc 
+def generateTopics(reviewsDF, company, numTopics):
+    '''        
+    url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+    url1 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
 
-#def generateTopics(reviewsDF, numTopics):
+    revs1 = sc.createRevs(url1)
+    revs2 = sc.createRevs(url2)
+
+    reviewsDF = sc.mergeRevs([revs1,revs2], ['Harpers', 'CU'])
+    mi = pd.MultiIndex.from_frame(reviewsDF)
         
-url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
-url1 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+    companies = mi.get_level_values('Company')
+    print(companies)
+    #Selecting reviews from df then putting into a single column
+    justRevs = (reviewsDF.iloc[:, reviewsDF.columns.get_level_values(1)=='Reviews'])
+    for company in companies:
+        revs = justRevs[companies[0]].append(justRevs[company]).reset_index(drop=True)
+    revs = revs.dropna()
+    print(revs)
+    '''
 
-revs1 = sc.createRevs(url1)
-revs2 = sc.createRevs(url2)
-
-reviewsDF = sc.mergeRevs([revs1,revs2], ['Harpers', 'CU'])
-        
-companies = reviewsDF.index.unique(level='Company')
-print(companies)
-#Selecting reviews from df then putting into a single column
-justRevs = (reviewsDF.iloc[:, reviewsDF.columns.get_level_values(1)=='Reviews'])
-for company in companies:
-    revs = justRevs[companies[0]].append(justRevs[company]).reset_index(drop=True)
-revs = revs.dropna()
-print(revs)
-
-'''
     #This works but only for a single company set of reviews
-    col = ["Reviews","Sentiment", "Url"]
-    revs = pd.DataFrame(columns = col)
-    revs = sc.addToRevs(revs, url1)
+    revs = (reviewsDF.iloc[:, reviewsDF.columns.get_level_values(0)== company])
+    revs.columns = revs.columns.droplevel()
+    print(revs)
     
-
     # removing everything except alphabets`
     revs['clean_revs'] = revs['Reviews'].str.replace("[^a-zA-Z#]", " ")
     # removing short words
@@ -78,7 +77,7 @@ print(revs)
 
     # SVD represent documents and terms in vectors 
     # n_components controls number of topics
-    svd_model = TruncatedSVD(n_components=10, algorithm='randomized', n_iter=100, random_state=122)
+    svd_model = TruncatedSVD(n_components=numTopics, algorithm='randomized', n_iter=100, random_state=122)
 
     svd_model.fit(X)
 
@@ -92,6 +91,20 @@ print(revs)
         for t in sorted_terms:
             print(t[0])
         print(" ")
-'''
 
+def main():
+    pd.options.display.max_columns = 50
+    url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+    url1 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+
+    rev1 = sc.createRevs(url1)
+    rev2 = sc.createRevs(url2)
+    revs = sc.mergeRevs([rev1, rev2], ['Harpers', 'CU'])
+    print(revs)
+        
+    generateTopics(revs, 'Harpers', 3)
+
+    
+if __name__== "__main__":
+    main()
 
