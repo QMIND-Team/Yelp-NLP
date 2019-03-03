@@ -91,7 +91,6 @@ def main():
     print("Let's go! \n") #Sanity check that things are starting
 
     for url in urllist:
-        print(url)
         revstmp = sc.createRevs(url)
         revslistraw.append(revstmp)
     
@@ -107,8 +106,6 @@ def main():
             revslist[j] = revtmp
 
     revs = sc.mergeRevs(revslist, names)
-
-    print(revs)
     pickle.dump(revs, open("df.p","wb"))
 
 if __name__ == "__main__":
