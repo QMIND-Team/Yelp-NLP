@@ -145,3 +145,29 @@ def mergeRevs(revsList, companyList):
     dfMerged = pd.concat(revsList, axis = 1, keys=companyList, names=['Company','Type'])
     return dfMerged
 
+def cleanRevs(revs):
+    companies = list(revs.columns.levels[0])
+    print(companies)
+    for company in companies:
+    
+        # removing everything except alphabets`
+        revs['clean_revs'] = revs['Reviews'].str.replace("[^a-zA-Z#]", " ")
+        # removing short words
+        revs['clean_revs'] = revs['clean_revs'].apply(lambda x: ' '.join([w for w in x.split() if len(w)>3]))
+        # make all text lowercase
+        revs['clean_revs'] = revs['clean_revs'].apply(lambda x: x.lower())
+    return cleanRevs
+
+def main():
+   # pd.options.display.max_columns = 50
+    url2 = "https://www.yelp.ca/biz/meridian-credit-union-toronto-4"
+    url1 = "https://www.yelp.ca/biz/harpers-burger-bar-kingston"
+
+    rev1 = createRevs(url1)
+    rev2 = createRevs(url2)
+    revs = mergeRevs([rev1, rev2], ['Harpers', 'CU'])
+    
+    cleanRevs(revs)
+    
+if __name__== "__main__":
+    main()
