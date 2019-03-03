@@ -83,6 +83,7 @@ len(svd_model.components_)
 
 terms = vectorizer.get_feature_names()
 
+#Print each set of topics
 for i, comp in enumerate(svd_model.components_):
     terms_comp = zip(terms, comp)
     sorted_terms = sorted(terms_comp, key= lambda x:x[1], reverse=True)[:7]
@@ -91,3 +92,15 @@ for i, comp in enumerate(svd_model.components_):
         print(t[0])
     print(" ")
     
+import umap
+
+X_topics = svd_model.fit_transform(X)
+embedding = umap.UMAP(n_neighbors=150, min_dist=0.5, random_state=12).fit_transform(X_topics)
+
+plt.figure(figsize=(7,5))
+plt.scatter(embedding[:, 0], embedding[:, 1], 
+c = dataset.target,
+s = 10, # size
+edgecolor='none'
+)
+plt.show()
