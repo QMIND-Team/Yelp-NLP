@@ -89,10 +89,11 @@ def extractDates(soup):
     datelistraw = [d.get_text().strip() for d in dates]
 
     for date in list(datelistraw):
-        if "reviews" in date:
+        if "review" in date:
             datelistraw.remove(date)
 
     datelist = []
+    print(datelistraw)
 
     for date in datelistraw:
         match = re.search(r'\d{1,2}/\d{1,2}/\d{4}', date).group(0)
