@@ -43,7 +43,7 @@ def addSentiments(revs):
     companies = list(revs.columns.levels[0])
     for company in companies:
         #iterate through each review
-        for index, rev in revs[company, 'Reviews'].iterrows():
+        for index, rev in revs[company, 'Reviews'].iteritems():
             #do sentiment analysis with rev
             sentiment = get_sentiment(rev)
             #place sentiment val in dataframe
