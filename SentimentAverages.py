@@ -5,13 +5,10 @@ import math
 
 data = pickle.load(open("dfFinal.p", "rb"))
 
-companies = list(data.columns.levels[0])
-sentAves = pd.DataFrame(columns = companies)
-
 years = range(2008, 2020)
 
-#go through each company
-for company in companies:
+def getSentimentAves(company):
+    #grab company's columns
     cdata = data[company]
 
     #drop rows without dates
@@ -22,7 +19,7 @@ for company in companies:
     cdata = cdata.sort_values(by =['Dates'])
 
     #create dataframe to place each sentiment average
-    sentimentdf = pd.DataFrame(index = years, columns = [company])
+    sentAves = pd.DataFrame(index = years, columns = ['Average Sentiment'])
 
     for year in years:
         #grab all sentiments for the year
@@ -34,32 +31,8 @@ for company in companies:
         yearAve = sumSent / numSent
         #place average in df
         if (math.isnan(yearAve)):
-            sentimentdf.at[year, company] = 0.5
+            sentAves.at[year] = 0.5
         else:
-            sentimentdf.at[year, company] = yearAve
+            sentAves.at[year] = yearAve
 
-    print(sentimentdf)
-
-
-'''
-
-#go through each review
-    for row in cdata.itertuples():
-        #print(row.Dates)
-        #grab year, sentiment values
-        cyear = row.Dates.year
-        sentiment = pd.Series(row.Sentiment)
-        #place sentiment in dataframe
-        sentimentdf[year] = sentimentdf[year].append(sentiment, ignore_index = True)
-        sentimentdf[year] = sentimentdf[year].append(sentiment, ignore_index = True)
-    for year in years:
-        if (data[company, 'Dates'].year == year):
-            print(data[company, 'Dates'])
-        #    yearSent = data[company].dt.year
-
-       # print(company + "\n" + yearSent)
-    
-    #find the average sentiment of that year
-
-    #save to spreadsheet of data to be added to other dataframe
-'''
+    return sentAves
