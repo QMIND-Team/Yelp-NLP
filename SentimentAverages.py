@@ -5,7 +5,7 @@ import math
 
 data = pickle.load(open("dfFinal.p", "rb"))
 
-years = range(2008, 2020)
+years = range(2005, 2020)
 
 def getSentimentAves(company):
     #grab company's columns
